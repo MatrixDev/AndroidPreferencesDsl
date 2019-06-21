@@ -10,7 +10,7 @@ Than you're in luck. With this very small library you can create preferences scr
 
 # Example
 
-Creating preference screens is pretty easy.
+Creating preference screen is pretty easy.
 
 First you'll need to initialize DSL in your `PreferenceFragmentCompat`:
 
@@ -57,23 +57,23 @@ This will be the result:
 
 ![Example](https://github.com/MatrixDev/AndroidPreferencesDsl/blob/master/AndroidPreferencesDsl.png)
 
-Custom `Preference` can be supported by just adding one extension functions:
+You can add support for your custom `AwesomePreference` class by writing just one extension function:
 
 ```kotlin
-inline fun <T : PreferenceGroup> Dsl<T>.myCustomPreference(
+inline fun <T : PreferenceGroup> Dsl<T>.awesome(
 	key: String = "",
-	block: MyCustomPreference.() -> Unit
-) = MyCustomPreference(it.context).apply { Dsl.attach(this, it, key).block() }
+	block: AwesomePreference.() -> Unit
+) = AwesomePreference(it.context).apply { Dsl.attach(this, it, key).block() }
 ```
 
-And than `MyCustomPreference` can be used within DSL block:
+And than `AwesomePreference` can be used within DSL block:
 
 ```kotlin
 category {
   ...
 
-  myCustomPreference {
-    title = "MyCustomPreference title"
+  awesome {
+    title = "Awesome!!!"
   }
 }
 ```
