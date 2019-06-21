@@ -1,16 +1,16 @@
 # AndroidPreferencesDsl
 
-[![Release](https://jitpack.io/v/MatrixDev/flavorAlias.svg)](https://jitpack.io/#MatrixDev/flavorAlias)
+[![Release](https://jitpack.io/v/MatrixDev/AndroidPreferencesDsl.svg)](https://jitpack.io/#MatrixDev/AndroidPreferencesDsl)
 
 # Overview
 
 Tired of writing Android preferences xml files?
 
-Than you're in luck. With this very small library you can create preferences screens purely in code with help of Kotlin DSL.
+Than you're in luck. With this very small library you can create preference screens purely in code with help of Kotlin DSL.
 
 # Example
 
-Creating preference screen is pretty easy.
+Creating a preference screen is pretty easy.
 
 First you'll need to initialize DSL in your `PreferenceFragmentCompat`:
 
@@ -22,7 +22,7 @@ override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) 
 }
 ```
 
-Than you can start adding actual preferences:
+Now you can start adding actual preferences:
 
 ```kotlin
 dsl(rootKey) {
@@ -100,7 +100,7 @@ Add actual library and compiler dependencies:
 
 ```gradle
 dependencies {
-    implementation 'com.github.MatrixDev:AndroidPreferencesDslLib:0.1.0'
+    implementation 'com.github.MatrixDev:AndroidPreferencesDsl:0.1.0'
 }
 ```
 
