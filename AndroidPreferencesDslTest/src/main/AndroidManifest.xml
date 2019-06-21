@@ -12,6 +12,7 @@
 
 		<activity
 				android:name=".TestActivity"
+				android:screenOrientation="fullSensor"
 				android:theme="@style/Theme.AppCompat"
 				android:exported="true"/>
 
