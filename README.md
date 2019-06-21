@@ -100,7 +100,7 @@ Add actual library and compiler dependencies:
 
 ```gradle
 dependencies {
-    implementation 'com.github.MatrixDev:AndroidPreferencesDslLib:1.0.0'
+    implementation 'com.github.MatrixDev:AndroidPreferencesDslLib:0.1.0'
 }
 ```
 
