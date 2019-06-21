@@ -1,91 +1,81 @@
-# flavorAlias
+# AndroidPreferencesDsl
 
 [![Release](https://jitpack.io/v/MatrixDev/flavorAlias.svg)](https://jitpack.io/#MatrixDev/flavorAlias)
-[![Android Arsenal]( https://img.shields.io/badge/Android%20Arsenal-flavorAlias-green.svg?style=flat )]( https://android-arsenal.com/details/1/7710 )
 
 # Overview
 
-Normally when working with multiple flavors and only one of those needs different implementation, you'd have to copy same implementation to each other flavor. For example if you had 100 flavors and some class had different behavior for one of those, you'd still need 100 copies of that class in each flavor with only one beeing different.
+Tired of writing Android preferences xml files?
 
-This is caused by gradle's limitation which forbids class files replacement through flavors (yet you still can replace other resources).
-
-There are few possible ways to overcome this limitation:
-- move all affected classes from `main` to `flavor` folder - leads to tons of duplicated code
-- use reflections to dynamically load classes from flavors - proguard will see those as unused which requires additional rules
-- use code generation to switch classes at compile time
-
-This library uses later solution to generate Kotlin aliases when needed.
-
-> [flavorSuperClass](https://github.com/MatrixDev/flavorSuperClass) library can be used for pure Java projects but it has some limitations.
+Than you're in luck. With this very small library you can create preferences screens purely in code with help of Kotlin DSL.
 
 # Example
 
-Lets assume that we have 3 flavors and `MyObject` class which we need to have different implementation only for flavor3.
+Creating preference screens is pretty easy.
 
-### Step 1
-
-Create base `MyObject` implementation in `main` flavor:
+First you'll need to initialize DSL in your `PreferenceFragmentCompat`:
 
 ```kotlin
-@GenerateTypeAlias("MyObject", priority = 1)
-open class MyObjectMain {
-    open fun doSomething() {}
+override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+  preferenceScreen = dsl(rootKey) {
+    // TODO ...
+  }
 }
 ```
 
-Actual class name must be unique for each flavor and also must be different from alias name.
-
-`@GenerateTypeAlias` is the only annotation provided by the library and it takes only two arguments:
-1. name - this will be the name of the generated alias
-2. priority - class annotated with the highest available priority wins and will be aliased
-
-### Step 2
-
-Create base `MyObject` implementation in `flavor3` flavor:
+Than you can start adding actual preferences:
 
 ```kotlin
-@GenerateTypeAlias("MyObject", priority = 2)
-class MyObjectFlavor3 : MyObjectMain() {
-    override fun doSomething() {}
+dsl(rootKey) {
+  category {
+    title = "Category #1"
+
+    preference {
+      title = "Regular preference title"
+      summary = "Regular preference summary"
+      setIcon(android.R.drawable.ic_dialog_info)
+    }
+  }
 }
 ```
 
-`MyObjectFlavor3` extends `MyObjectMain` just to keep some consistency. There is no actual requirement to do this.
-
-### Step 3
-
-Thats it, there is no step 3 :)
-
-At this time library will generate alias with name `MyObject` which can be used everywhere in the code:
+This library contains mappings for all AndroidX preferences. So to add `CheckBoxPreference` just add few lines of code:
 
 ```kotlin
-val myObject = MyObject()
-myObject.doSomething()
+category {
+  ...
+
+  checkBox {
+    title = "CheckBox title"
+    summary = "CheckBox summary"
+    setIcon(android.R.drawable.ic_menu_compass)
+    onChange { summary = "CheckBox changed to $it" }
+  }
+}
 ```
 
-Alias will be pointing to `MyObjectFlavor3` when building project with `flavor3` variant:
+This will be the result:
+
+![Example](https://github.com/MatrixDev/AndroidPreferencesDsl/blob/master/AndroidPreferencesDsl.png)
+
+Custom `Preference` can be supported by just adding one extension functions:
 
 ```kotlin
-typealias MyObject = MyObjectFlavor3
+inline fun <T : PreferenceGroup> Dsl<T>.myCustomPreference(
+	key: String = "",
+	block: MyCustomPreference.() -> Unit
+) = MyCustomPreference(it.context).apply { Dsl.attach(this, it, key).block() }
 ```
 
-And for all other build variants it will point to `MyObjectMain`:
+And than `MyCustomPreference` can be used within DSL block:
 
 ```kotlin
-typealias MyObject = MyObjectMain
-```
+category {
+  ...
 
-Project structure should look something like this:
-
-```
-main
-  -> MyObjectMain.kt
-  
-flavorM
-  -> MyObjectFlavorM.kt
-
-generated
-  -> MyObject.kt
+  myCustomPreference {
+    title = "MyCustomPreference title"
+  }
+}
 ```
 
 # How to add dependencies?
@@ -110,13 +100,11 @@ Add actual library and compiler dependencies:
 
 ```gradle
 dependencies {
-    implementation 'com.github.MatrixDev.flavorAlias:flavorAliasLib:1.0'
-    
-    kapt 'com.github.MatrixDev.flavorAlias:flavorAliasCompiler:1.0'
+    implementation 'com.github.MatrixDev:AndroidPreferencesDslLib:1.0.0'
 }
 ```
 
-More info can be found at https://jitpack.io/#MatrixDev/flavorAlias
+More info can be found at https://jitpack.io/#MatrixDev/AndroidPreferencesDsl
 
 # License
 
