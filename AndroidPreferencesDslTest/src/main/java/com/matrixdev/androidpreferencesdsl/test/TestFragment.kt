@@ -10,7 +10,7 @@ import com.matrixdev.androidpreferencesdsl.*
 class TestFragment : PreferenceFragmentCompat() {
 
 	override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-		preferenceScreen = dsl(rootKey) {
+		preferenceScreen = buildPreferenceScreen(rootKey) {
 			category {
 				title = "Category #1"
 

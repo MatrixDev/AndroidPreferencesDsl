@@ -16,8 +16,8 @@ First you'll need to initialize DSL in your `PreferenceFragmentCompat`:
 
 ```kotlin
 override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-  preferenceScreen = dsl(rootKey) {
-    // TODO ...
+  preferenceScreen = buildPreferenceScreen(rootKey) {
+    ...
   }
 }
 ```
@@ -25,7 +25,7 @@ override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) 
 Now you can start adding actual preferences:
 
 ```kotlin
-dsl(rootKey) {
+buildPreferenceScreen(rootKey) {
   category {
     title = "Category #1"
 
@@ -62,8 +62,8 @@ You can add support for your custom `AwesomePreference` class by writing just on
 ```kotlin
 inline fun <T : PreferenceGroup> Dsl<T>.awesome(
 	key: String = "",
-	block: AwesomePreference.() -> Unit
-) = AwesomePreference(it.context).apply { Dsl.attach(this, it, key).block() }
+	block: @PreferenceDslMarker AwesomePreference.() -> Unit
+) = chainFinal(AwesomePreference(it.context), key, block)
 ```
 
 And than `AwesomePreference` can be used within DSL block:

@@ -9,7 +9,7 @@ import androidx.preference.PreferenceFragmentCompat
 class PreferenceFragment : PreferenceFragmentCompat() {
 
 	override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-		preferenceScreen = dsl(rootKey) {
+		preferenceScreen = buildPreferenceScreen(rootKey) {
 			category {
 
 			}

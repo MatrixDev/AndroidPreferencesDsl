@@ -9,44 +9,44 @@ import androidx.preference.*
 inline fun <T : PreferenceGroup> Dsl<T>.category(
 	key: String = "",
 	block: @PreferenceDslMarker Dsl<PreferenceCategory>.() -> Unit
-) = PreferenceCategory(it.context).apply { Dsl(this, it, key).block() }
+) = chainDsl(PreferenceCategory(it.context), key, block)
 
 inline fun <T : PreferenceGroup> Dsl<T>.preference(
 	key: String = "",
 	block: @PreferenceDslMarker Preference.() -> Unit
-) = Preference(it.context).apply { Dsl.attach(this, it, key).block() }
+) = chainFinal(Preference(it.context), key, block)
 
 inline fun <T : PreferenceGroup> Dsl<T>.checkBox(
 	key: String = "",
 	block: @PreferenceDslMarker CheckBoxPreference.() -> Unit
-) = CheckBoxPreference(it.context).apply { Dsl.attach(this, it, key).block() }
+) = chainFinal(CheckBoxPreference(it.context), key, block)
 
 inline fun <T : PreferenceGroup> Dsl<T>.switch(
 	key: String = "",
 	block: @PreferenceDslMarker SwitchPreference.() -> Unit
-) = SwitchPreference(it.context).apply { Dsl.attach(this, it, key).block() }
+) = chainFinal(SwitchPreference(it.context), key, block)
 
 inline fun <T : PreferenceGroup> Dsl<T>.seekBar(
 	key: String = "",
 	block: @PreferenceDslMarker SeekBarPreference.() -> Unit
-) = SeekBarPreference(it.context).apply { Dsl.attach(this, it, key).block() }
+) = chainFinal(SeekBarPreference(it.context), key, block)
 
 inline fun <T : PreferenceGroup> Dsl<T>.dropDown(
 	key: String = "",
-	block: DropDownPreference.() -> Unit
-) = DropDownPreference(it.context).apply { Dsl.attach(this, it, key).block() }
+	block: @PreferenceDslMarker DropDownPreference.() -> Unit
+) = chainFinal(DropDownPreference(it.context), key, block)
 
 inline fun <T : PreferenceGroup> Dsl<T>.editText(
 	key: String = "",
-	block: EditTextPreference.() -> Unit
-) = EditTextPreference(it.context).apply { Dsl.attach(this, it, key).block() }
+	block: @PreferenceDslMarker EditTextPreference.() -> Unit
+) = chainFinal(EditTextPreference(it.context), key, block)
 
 inline fun <T : PreferenceGroup> Dsl<T>.list(
 	key: String = "",
-	block: ListPreference.() -> Unit
-) = ListPreference(it.context).apply { Dsl.attach(this, it, key).block() }
+	block: @PreferenceDslMarker ListPreference.() -> Unit
+) = chainFinal(ListPreference(it.context), key, block)
 
 inline fun <T : PreferenceGroup> Dsl<T>.multiSelectList(
 	key: String = "",
-	block: MultiSelectListPreference.() -> Unit
-) = MultiSelectListPreference(it.context).apply { Dsl.attach(this, it, key).block() }
+	block: @PreferenceDslMarker MultiSelectListPreference.() -> Unit
+) = chainFinal(MultiSelectListPreference(it.context), key, block)

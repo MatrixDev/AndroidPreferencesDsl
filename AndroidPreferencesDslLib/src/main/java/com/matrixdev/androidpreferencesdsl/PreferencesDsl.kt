@@ -12,29 +12,15 @@ import androidx.preference.PreferenceGroup
 annotation class PreferenceDslMarker
 
 @PreferenceDslMarker
-class Dsl<T : Preference>(val it: T, parent: PreferenceGroup?, key: String) {
-	companion object {
-		fun <T : Preference> attach(preference: T, parent: PreferenceGroup?, key: String) = preference.also {
-			preference.key = if (parent == null || key.isNotEmpty()) {
-				key
-			} else {
-				parent.key + "_" + parent.preferenceCount
-			}
-			parent?.addPreference(preference)
-		}
-	}
+class Dsl<T : Preference>(val it: T) {
 
-	init {
-		if (parent != null) attach(it, parent, key)
-	}
-
-	var title
+	var title: CharSequence
 		get() = it.title
 		set(value) {
 			it.title = value
 		}
 
-	var summary
+	var summary: CharSequence
 		get() = it.summary
 		set(value) {
 			it.summary = value
