@@ -23,6 +23,7 @@ inline fun PreferenceFragmentCompat.buildPreferenceScreen(
 ): PreferenceScreen {
 	val screen = preferenceManager.createPreferenceScreen(preferenceManager.context)
 	screen.key = screenKey
+	preferenceScreen = screen
 	screen.build(block)
 	return screen
 }

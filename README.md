@@ -16,7 +16,7 @@ First you'll need to initialize DSL in your `PreferenceFragmentCompat`:
 
 ```kotlin
 override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-  preferenceScreen = buildPreferenceScreen(rootKey) {
+  buildPreferenceScreen(rootKey) {
     ...
   }
 }

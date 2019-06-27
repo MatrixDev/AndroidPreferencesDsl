@@ -10,7 +10,7 @@ import com.matrixdev.androidpreferencesdsl.*
 class TestFragment : PreferenceFragmentCompat() {
 
 	override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-		preferenceScreen = buildPreferenceScreen(rootKey) {
+		buildPreferenceScreen(rootKey) {
 			category {
 				title = "Category #1"
 
@@ -23,7 +23,7 @@ class TestFragment : PreferenceFragmentCompat() {
 			category {
 				title = "Category #2"
 
-				switch {
+				val switch = switch {
 					title = "Switch title"
 					isChecked = true
 					summary = "Switch summary"
@@ -34,6 +34,7 @@ class TestFragment : PreferenceFragmentCompat() {
 				checkBox {
 					title = "CheckBox title"
 					summary = "CheckBox summary"
+					dependency = switch.key
 					setIcon(android.R.drawable.ic_menu_compass)
 					onChange { summary = "CheckBox changed to $it" }
 				}
