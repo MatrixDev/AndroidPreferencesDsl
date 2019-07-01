@@ -1,6 +1,7 @@
 # AndroidPreferencesDsl
 
 [![Release](https://jitpack.io/v/MatrixDev/AndroidPreferencesDsl.svg)](https://jitpack.io/#MatrixDev/AndroidPreferencesDsl)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-AndroidPreferencesDsl-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/7740)
 
 # Overview
 
